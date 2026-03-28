@@ -5,43 +5,139 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrecificAna"
         mc:Ignorable="d"
-        Title="PrecificANA!" Height="450" Width="400">
-
-
+        Title="PrecificANA!" Height="500" Width="400">
+    
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="99*"/>
-            <ColumnDefinition Width="301*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Margin="20,20,20,20" Grid.ColumnSpan="2">
-            <TextBlock Text="PrecificANA!" FontSize="20" FontWeight="Bold" Margin="0,0,0,15" HorizontalAlignment="Center"/>
+        <TabControl>
+            <TabItem Header="Calculadora">
+                <ScrollViewer>
+                    <StackPanel Margin="20">
+                        <TextBlock Text="PrecificANA!" 
+                                   FontSize="20" 
+                                   FontWeight="Bold" Margin="0,0,0,0" 
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="by ceramicANA!" 
+                                   FontSize="10" 
+                                   FontWeight="ExtraLight" Margin="50,0,0,15" 
+                                   HorizontalAlignment="Center"/>
 
-            <Label Content="1. Peso da Peça Seca (em gramas, antes de queimar):" Target="{Binding ElementName=txtPesoSeco}"/>
-            <TextBox x:Name="txtPesoSeco" Text="{Binding PesoSeco, UpdateSourceTrigger=PropertyChanged}" 
-                 Margin="0,0,0,10" Width="167" HorizontalAlignment="Left" />
+                        <Label Content="1. Peso da Peça Seca (gramas):" 
+                               Target="{Binding ElementName=txtPesoSeco}"/>
+                        <TextBox x:Name="txtPesoSeco" 
+                                 Text="{Binding PesoSeco, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="0,0,0,10" 
+                                 Width="167" 
+                                 HorizontalAlignment="Left" />
 
-            <Label Content="2. Tempo de produção (em minutos):" Target="{Binding ElementName=txtTempo}"/>
-            <TextBox x:Name="txtTempo" Text="{Binding TempoMinutos, UpdateSourceTrigger=PropertyChanged}" 
-                 Margin="0,0,0,10" Width="167" HorizontalAlignment="Left" />
+                        <Label Content="2. Tempo de produção (minutos):"
+                               Target="{Binding ElementName=txtTempo}"/>
+                        <TextBox x:Name="txtTempo" 
+                                 Text="{Binding TempoMinutos, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="0,0,0,10"
+                                 Width="167" 
+                                 HorizontalAlignment="Left" />
 
-            <Label Content="3. Esmalte Líquido Usado (em gramas):" Target="{Binding ElementName=txtEsmalteUsado}"/>
-            <TextBox x:Name="txtEsmalteUsado" Text="{Binding GramasEsmalte, UpdateSourceTrigger=PropertyChanged}" 
-                 Margin="0,0,0,10" Width="167" HorizontalAlignment="Left" />
+                        <Label Content="3. Esmalte Líquido Usado (gramas):" 
+                               Target="{Binding ElementName=txtEsmalteUsado}"/>
+                        <TextBox x:Name="txtEsmalteUsado" 
+                                 Text="{Binding GramasEsmalte, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="0,0,0,10" 
+                                 Width="167" 
+                                 HorizontalAlignment="Left" />
 
-            <Label Content="4. Peso Esmaltado Final (em gramas, para a 2ª Queima):" Target="{Binding ElementName=txtPesoAlta}"/>
-            <TextBox x:Name="txtPesoAlta" Text="{Binding PesoEsmaltado, UpdateSourceTrigger=PropertyChanged}" 
-                 Margin="0,0,0,10" Width="167" HorizontalAlignment="Left" />
+                        <Label Content="4. Peso Esmaltado Final (gramas):" 
+                               Target="{Binding ElementName=txtPesoAlta}"/>
+                        <TextBox x:Name="txtPesoAlta" 
+                                 Text="{Binding PesoEsmaltado, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="0,0,0,10" Width="167"
+                                 HorizontalAlignment="Left" />
 
-            <Separator Margin="0,15,0,15" />
+                        <Separator Margin="0,15,0,15" />
 
-            <TextBlock Text="Preço Final Estimado (com lucro):" HorizontalAlignment="Center" Margin="0,0,0,5" />
+                        <TextBlock Text="Preço Final Estimado (com lucro):" 
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,5" />
 
-            <TextBlock Text="{Binding PrecoFinal}" 
-                   FontSize="28" 
-                   FontWeight="Bold" 
-                   Foreground="#2E7D32" 
-                   HorizontalAlignment="Center" />
-        </StackPanel>
+                        <TextBlock Text="{Binding PrecoFinal}" 
+                                   FontSize="28" 
+                                   FontWeight="Bold" 
+                                   Foreground="#2E7D32" 
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
 
+            <TabItem Header="Configurações">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Configurações de Preços" 
+                               FontSize="18" 
+                               FontWeight="Bold" />
+
+                    <Label Content="Valor da argila (R$/kg):" 
+                           Target="{Binding ElementName=txtPrecoArgilaKg}"/>
+
+                    <TextBox x:Name="txtPrecoArgilaKg" 
+                                 Text="{Binding PrecoArgilaKg, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="6,0,0,0" 
+                                 Width="120" 
+                                 HorizontalAlignment="Left" />
+
+                    <Label Content="Preço queima de biscoito (R$/kg):" 
+                           Target="{Binding ElementName=txtPrecoQueimaBiscoito}"/>
+
+                    <TextBox x:Name="txtPrecoQueimaBiscoito" 
+                                 Text="{Binding PrecoQueimaBiscoitoKg, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="6,0,0,0" 
+                                 Width="120" 
+                                 HorizontalAlignment="Left" />
+
+                    <Label Content="Preço queima de esmalte (R$/kg):" 
+                           Target="{Binding ElementName=txtPrecoQueimaAlta}"/>
+
+                    <TextBox x:Name="txtPrecoQueimaAlta" 
+                                 Text="{Binding PrecoQueimaEsmalteKg, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="6,0,0,0" 
+                                 Width="120" 
+                                 HorizontalAlignment="Left" />
+
+                    <Label Content="Preço do pote de esmalte (R$):" 
+                           Target="{Binding ElementName=txtPrecoPoteEsmalte}"/>
+
+                    <TextBox x:Name="txtPrecoPoteEsmalte" 
+                                 Text="{Binding PrecoPoteEsmalte, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="6,0,0,0" 
+                                 Width="120" 
+                                 HorizontalAlignment="Left" />
+
+                    <Label Content="Peso do pote de esmalte (gramas):" 
+                           Target="{Binding ElementName=txtPesoPoteEsmalteGramas}"/>
+
+                    <TextBox x:Name="txtPesoPoteEsmalteGramas" 
+                                 Text="{Binding PesoPoteEsmalteGramas, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="6,0,0,0" 
+                                 Width="120" 
+                                 HorizontalAlignment="Left" />
+
+                    <Label Content="Valor da hora de trabalho (R$):" 
+                           Target="{Binding ElementName=txtValorHoraTrabalho}"/>
+
+                    <TextBox x:Name="txtValorHoraTrabalho" 
+                                 Text="{Binding ValorHoraTrabalho, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="6,0,0,0" 
+                                 Width="120" 
+                                 HorizontalAlignment="Left" />
+
+                    <Label Content="Margem de lucro (%):" 
+                           Target="{Binding ElementName=txtMargemLucroPorcentagem}"/>
+
+                    <TextBox x:Name="txtMargemLucroPorcentagem" 
+                                 Text="{Binding MargemLucroPorcentagem, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="6,0,0,0" 
+                                 Width="120" 
+                                 HorizontalAlignment="Left" />
+
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

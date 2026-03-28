@@ -26,6 +26,34 @@ public partial class MainViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(PrecoFinal))]
     private int _tempoMinutos;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrecoFinal))]
+    private decimal _precoArgilaKg;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrecoFinal))]
+    private decimal _precoQueimaBiscoitoKg;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrecoFinal))]
+    private decimal _precoQueimaEsmalteKg;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrecoFinal))]
+    private decimal _precoPoteEsmalte;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrecoFinal))]
+    private decimal _pesoPoteEsmalteGramas;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrecoFinal))]
+    private decimal _valorHoraTrabalho;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrecoFinal))]
+    private decimal _margemLucroPorcentagem;
+
     private readonly CalculadoraService _calculadora = new();
 
     private Configuracao _config = new()
