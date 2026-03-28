@@ -1,0 +1,47 @@
+﻿<Window x:Class="PrecificAna.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PrecificAna"
+        mc:Ignorable="d"
+        Title="PrecificANA!" Height="450" Width="400">
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="99*"/>
+            <ColumnDefinition Width="301*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="20,20,20,20" Grid.ColumnSpan="2">
+            <TextBlock Text="PrecificANA!" FontSize="20" FontWeight="Bold" Margin="0,0,0,15" HorizontalAlignment="Center"/>
+
+            <Label Content="1. Peso da Peça Seca (em gramas, antes de queimar):" Target="{Binding ElementName=txtPesoSeco}"/>
+            <TextBox x:Name="txtPesoSeco" Text="{Binding PesoSeco, UpdateSourceTrigger=PropertyChanged}" 
+                 Margin="0,0,0,10" Width="167" HorizontalAlignment="Left" />
+
+            <Label Content="2. Tempo de produção (em minutos):" Target="{Binding ElementName=txtTempo}"/>
+            <TextBox x:Name="txtTempo" Text="{Binding TempoMinutos, UpdateSourceTrigger=PropertyChanged}" 
+                 Margin="0,0,0,10" Width="167" HorizontalAlignment="Left" />
+
+            <Label Content="3. Esmalte Líquido Usado (em gramas):" Target="{Binding ElementName=txtEsmalteUsado}"/>
+            <TextBox x:Name="txtEsmalteUsado" Text="{Binding GramasEsmalte, UpdateSourceTrigger=PropertyChanged}" 
+                 Margin="0,0,0,10" Width="167" HorizontalAlignment="Left" />
+
+            <Label Content="4. Peso Esmaltado Final (em gramas, para a 2ª Queima):" Target="{Binding ElementName=txtPesoAlta}"/>
+            <TextBox x:Name="txtPesoAlta" Text="{Binding PesoEsmaltado, UpdateSourceTrigger=PropertyChanged}" 
+                 Margin="0,0,0,10" Width="167" HorizontalAlignment="Left" />
+
+            <Separator Margin="0,15,0,15" />
+
+            <TextBlock Text="Preço Final Estimado (com lucro):" HorizontalAlignment="Center" Margin="0,0,0,5" />
+
+            <TextBlock Text="{Binding PrecoFinal}" 
+                   FontSize="28" 
+                   FontWeight="Bold" 
+                   Foreground="#2E7D32" 
+                   HorizontalAlignment="Center" />
+        </StackPanel>
+
+    </Grid>
+</Window>
