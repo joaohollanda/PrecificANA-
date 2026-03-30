@@ -7,32 +7,42 @@ namespace PrecificAna.Services;
 
 public class CalculadoraService
 {
-    public decimal CalcularPrecoFinal(Peca peca, Configuracao config)
+    public ResultadoCalculo CalcularPrecoFinal(Peca peca, Configuracao config)
     {
-        // 1. Custo da Argila (baseado no peso seco inicial)
-        decimal custoArgila = (decimal)(peca.PesoSecoGramas / 1000) * config.PrecoArgilaKg;
+        var resultado = new ResultadoCalculo();
+
+        // Criamos uma constante para o fator de correção de 5% (1.05)
+        // Isso garante que o custo da argila cubra a perda de massa
+        const decimal FATOR_CORRECAO = 1.05m;
+
+        // 1. Custo da Argila (Usando 1000m para forçar conta decimal e aplicando os 5%)
+        resultado.CustoArgila = ((decimal)peca.PesoSecoGramas / 1000m) * FATOR_CORRECAO * config.PrecoArgilaKg;
 
         // 2. Custo da 1ª Queima (Biscoito - peso seco)
-        decimal custoBiscoito = (decimal)(peca.PesoSecoGramas / 1000) * config.PrecoQueimaBiscoitoKg;
+        resultado.CustoQueimaBiscoito = ((decimal)peca.PesoSecoGramas / 1000m) * config.PrecoQueimaBiscoitoKg;
 
-        // 3. Custo do Material do Esmalte (O pote vs. gramas usadas)
+        // 3. Custo do Material do Esmalte
         decimal precoPorGramaEsmalte = config.PrecoPoteEsmalte / (decimal)config.PesoPoteEsmalteGramas;
-        decimal custoMaterialEsmalte = precoPorGramaEsmalte * (decimal)peca.QuantidadeEsmalteUtilizado;
+        resultado.CustoMaterialEsmalte = precoPorGramaEsmalte * (decimal)peca.QuantidadeEsmalteUtilizado;
 
-        // 4. Custo da 2ª Queima (Alta - peso já com esmalte, informado por ela)
-        // Se ela não informou o peso esmaltado, usamos o seco como base (margem de segurança)
-        double pesoParaAlta = peca.PesoEsmaltadoGramas ?? peca.PesoSecoGramas;
-        decimal custoQueimaAlta = (decimal)(pesoParaAlta / 1000) * config.PrecoQueimaEsmalteKg;
+        // 4. Custo da 2ª Queima (Alta)
+        decimal pesoParaAlta = (decimal)(peca.PesoEsmaltadoGramas ?? peca.PesoSecoGramas);
+        resultado.CustoQueimaAlta = (pesoParaAlta / 1000m) * config.PrecoQueimaEsmalteKg;
 
-        // 5. Custo da Mão de Obra (Minutos convertidos em valor)
-        decimal custoMaoDeObra = (peca.TempoProducaoMinutos / 60m) * config.ValorHoraTrabalho;
+        // 5. Custo da Mão de Obra
+        resultado.CustoMaoDeObra = (peca.TempoProducaoMinutos / 60m) * config.ValorHoraTrabalho;
 
-        // SOMA DE TUDO
-        decimal custoTotalProducao = custoArgila + custoBiscoito + custoMaterialEsmalte + custoQueimaAlta + custoMaoDeObra;
+        // SOMA DOS CUSTOS (Custo de Produção)
+        resultado.CustoTotalProducao = resultado.CustoArgila +
+                                       resultado.CustoQueimaBiscoito +
+                                       resultado.CustoMaterialEsmalte +
+                                       resultado.CustoQueimaAlta +
+                                       resultado.CustoMaoDeObra;
 
-        // 6. Preço Final com Margem de Lucro
-        decimal precoComLucro = custoTotalProducao * (1 + (decimal)config.MargemLucroPorcentagem);
+        // 6. Preço Final (Custo + Margem de Lucro)
+        // Se a margem é 0.30 (30%), a conta é Custo * 1.30
+        resultado.PrecoComLucro = resultado.CustoTotalProducao * (1 + (decimal)config.MargemLucroPorcentagem);
 
-        return precoComLucro;
+        return resultado;
     }
 }

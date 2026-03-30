@@ -75,11 +75,11 @@
                                    Margin="10,0,0,10" />
 
                         <UniformGrid Columns="2" Margin="0,0,0,0" HorizontalAlignment="Center">
-                            <TextBlock Text="Argila: R$50,99 " Margin="0,0,0,0" />
-                            <TextBlock Text="Tempo: R$10,00 " Margin="0,0,0,0" />
-                            <TextBlock Text="Esmalte: R$15,00 " Margin="0,0,0,0" />
-                            <TextBlock Text="Queima biscoito: R$5,50 " Margin="0,0,0,0" />
-                            <TextBlock Text="Queima alta: R$5,50 " Margin="0,0,0,0" />
+                            <TextBlock Text="{Binding Resultado.CustoArgila, StringFormat='Argila: {0:C2}'}" Margin="0,0,0,0" />
+                            <TextBlock Text="{Binding Resultado.CustoMaoDeObra, StringFormat='Tempo: {0:C2}'}" Margin="0,0,0,0" />
+                            <TextBlock Text="{Binding Resultado.CustoMaterialEsmalte, StringFormat='Esmalte: {0:C2}'}" Margin="0,0,0,0" />
+                            <TextBlock Text="{Binding Resultado.CustoQueimaBiscoito, StringFormat='Queima biscoito: {0:C2}'}" Margin="0,0,0,0" />
+                            <TextBlock Text="{Binding Resultado.CustoQueimaAlta, StringFormat='Queima alta: {0:C2}'}" Margin="0,0,0,0" />
                         </UniformGrid>
                         
 

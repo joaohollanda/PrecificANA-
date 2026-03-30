@@ -55,12 +55,15 @@ public partial class MainViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(PrecoFinal))]
     private decimal _margemLucroPorcentagem;
 
+    [ObservableProperty]
+    private ResultadoCalculo _resultado;
+
     private readonly CalculadoraService _calculadora = new();
     private readonly ConfiguracaoService _configuracaoService = new();
 
     public MainViewModel()
     {
-
+        Resultado = new ResultadoCalculo();
         Configuracao configSalva = _configuracaoService.Carregar();
 
         if (configSalva != null)
@@ -85,6 +88,7 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+
     public string PrecoFinal
     {
         get
@@ -107,9 +111,9 @@ public partial class MainViewModel : ObservableObject
                 ValorHoraTrabalho = this.ValorHoraTrabalho,
                 MargemLucroPorcentagem = (double)this.MargemLucroPorcentagem
             };
-            decimal resultado = _calculadora.CalcularPrecoFinal(peca, configDaTela);
+            Resultado = _calculadora.CalcularPrecoFinal(peca, configDaTela);
 
-            return resultado.ToString("C2");
+            return Resultado.PrecoComLucro.ToString("C2");
         }
     }
 
@@ -123,7 +127,8 @@ public partial class MainViewModel : ObservableObject
                              e.PropertyName == nameof(TempoMinutos) ||
                              e.PropertyName == nameof(GramasEsmalte) ||
                              e.PropertyName == nameof(PesoEsmaltado) ||
-                             e.PropertyName == nameof(PrecoFinal);
+                             e.PropertyName == nameof(PrecoFinal) ||
+                             e.PropertyName == nameof(Resultado);
 
         // Se o que mudou NÃO for um campo da peça, significa que foi uma configuração! Então salvamos.
         if (!isCampoDaPeca)
