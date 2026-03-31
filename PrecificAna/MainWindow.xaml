@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrecificAna"
         mc:Ignorable="d"
-        Title="PrecificANA!" Height="530" Width="400">
+        Title="PrecificANA!" Height="580" Width="400">
 
     <Grid>
         <TabControl>
@@ -80,6 +80,7 @@
                             <TextBlock Text="{Binding Resultado.CustoMaterialEsmalte, StringFormat='Esmalte: {0:C2}'}" Margin="0,0,0,0" />
                             <TextBlock Text="{Binding Resultado.CustoQueimaBiscoito, StringFormat='Queima biscoito: {0:C2}'}" Margin="0,0,0,0" />
                             <TextBlock Text="{Binding Resultado.CustoQueimaAlta, StringFormat='Queima alta: {0:C2}'}" Margin="0,0,0,0" />
+                            <TextBlock Text="{Binding Resultado.CustoTotalProducao, StringFormat='Custo total: {0:C2}'}" Margin="0,0,0,0" />
                         </UniformGrid>
                         
 

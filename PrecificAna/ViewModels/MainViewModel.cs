@@ -10,6 +10,7 @@ namespace PrecificAna.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
+    private bool _isLoading = true;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(PrecoFinal))]
@@ -63,6 +64,8 @@ public partial class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
+        _isLoading = true;
+
         Resultado = new ResultadoCalculo();
         Configuracao configSalva = _configuracaoService.Carregar();
 
@@ -86,6 +89,8 @@ public partial class MainViewModel : ObservableObject
             ValorHoraTrabalho = 25m;
             MargemLucroPorcentagem = 0.30m;
         }
+
+            _isLoading = false;
     }
 
 
@@ -107,7 +112,7 @@ public partial class MainViewModel : ObservableObject
                 PrecoQueimaBiscoitoKg = this.PrecoQueimaBiscoitoKg,
                 PrecoQueimaEsmalteKg = this.PrecoQueimaEsmalteKg,
                 PrecoPoteEsmalte = this.PrecoPoteEsmalte,
-                PesoPoteEsmalteGramas = (double)this.PesoPoteEsmalteGramas, // Coloquei um (double) aqui caso na sua model original esteja double
+                PesoPoteEsmalteGramas = (double)this.PesoPoteEsmalteGramas, 
                 ValorHoraTrabalho = this.ValorHoraTrabalho,
                 MargemLucroPorcentagem = (double)this.MargemLucroPorcentagem
             };
@@ -117,20 +122,19 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
-    // Este método roda automaticamente sempre que qualquer propriedade Binding muda
+
     protected override void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
 
-        // Lista de propriedades que NÃO são configurações (são da peça)
+        if (_isLoading) return;
+
         bool isCampoDaPeca = e.PropertyName == nameof(PesoSeco) ||
                              e.PropertyName == nameof(TempoMinutos) ||
                              e.PropertyName == nameof(GramasEsmalte) ||
                              e.PropertyName == nameof(PesoEsmaltado) ||
                              e.PropertyName == nameof(PrecoFinal) ||
                              e.PropertyName == nameof(Resultado);
-
-        // Se o que mudou NÃO for um campo da peça, significa que foi uma configuração! Então salvamos.
         if (!isCampoDaPeca)
         {
             var configAtual = new Configuracao
